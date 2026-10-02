@@ -1,0 +1,24 @@
+# Generated host / ARM objects and test outputs
+/firmware/build/
+/firmware/build-asan/
+
+# PlatformIO generated files
+/firmware/.pio/
+/.pio/
+
+# Runtime logs
+*.log
+/logs/
+/firmware/logs/
+
+# Local credentials and secret material
+.env
+.env.*
+!.env.example
+!.env.template
+/secrets/
+/firmware/secrets/
+*.pem
+*.key
+*.p12
+*.pfx

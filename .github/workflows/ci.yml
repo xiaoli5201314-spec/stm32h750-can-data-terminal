@@ -1,0 +1,25 @@
+name: Host Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  host-tests:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - name: Check Out Source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: GCC Host Tests
+        run: make -C firmware -B test CC=gcc
+
+      - name: Address and Undefined Behavior Sanitizers
+        run: make -C firmware asan CC=gcc
