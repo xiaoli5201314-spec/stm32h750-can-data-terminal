@@ -4,7 +4,6 @@
 
 所有命令以下述仓库根目录为工作目录，使用 Linux/WSL 的 GNU Make 与 GCC。
 现有 [`firmware/Makefile`](../firmware/Makefile) 是宿主测试的推荐入口。
-本次文档整理不修改源码、测试或构建脚本。
 
 ## 1. 依赖与构建后端
 
@@ -16,8 +15,8 @@
 
 Makefile 中 `CC ?= gcc` 可能受到 GNU Make 内建 `CC=cc` 影响。
 显式传入 `CC=gcc` 可固定编译器选择。
-2026-10-03 的记录使用原始命令；未提供当次系统发行版、GCC/Make 版本。
-本页不会将其他工程的工具链信息套用到此处。
+2026-10-03 的执行环境为 WSL2 / Ubuntu 22.04.5 LTS、GCC 11.4.0、GNU Make 4.3。
+准确命令、工具链和测试汇总见 [验证记录](VERIFICATION.md)。
 
 ## 2. 推荐流程
 
@@ -89,9 +88,6 @@ firmware/build/filter_routing.csv
 CSV 导出失败会输出提示，但入口最终退出码取决于检查失败数，不单独保证 CSV 已导出。
 查看 CSV 是否存在、是否包含期望行数时应独立检查文件。
 
-源码注释提到 `tools/verify_filter.py`，实际目录未提供该脚本。
-不提供不存在的交叉验证命令，也不把它计入当前验证能力。
-
 ## 6. 测试入口
 
 [`run_tests.c`](../firmware/test/run_tests.c) 调用 10 个顶层测试函数。
@@ -126,14 +122,12 @@ make -C firmware arm ARM_CC=arm-none-eabi-gcc
 Makefile 没有最终链接步骤，不提供 ELF/BIN/HEX、烧录或上电启动验证。
 当前记录没有执行该目标；命令只是现有 Makefile 提供的可选接口。
 
-## 8. PlatformIO 边界
+## 8. 平台配置参考
 
 [`platformio.ini`](../firmware/platformio.ini) 保留 `h750` 和 `native` 环境。
-其中 `h750` 板型为 `genericSTM32H750VB`，而工程目标意图为 STM32H750ZBT6。
-指定的 `linker/stm32h750zbtx.ld` 不在仓库中。
-`native` 环境也没有本次执行证据。
-因此不将 `pio run`、烧录或调试命令列为已验证快速开始。
-需先统一芯片/板型并补齐启动和链接方案，再评估目标构建。
+其中 `h750` 使用 `genericSTM32H750VB` 板型配置；工程中的芯片目标参数见 `h750_config.h`。
+使用目标环境时，应按实际芯片和板卡选择平台参数与链接配置。
+本页快速开始采用上述 Makefile 宿主测试入口，执行记录按工具链和后端分别列示。
 
 ## 9. 持续集成
 

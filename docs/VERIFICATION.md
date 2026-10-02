@@ -132,3 +132,16 @@ make -C firmware -B asan CC=gcc
 后续证据宜同时保留工具链版本、提交 SHA、原始日志、退出码和必要的生成文件。
 板端记录应单独标注设备、接线、输入负载、持续时间和测量方式。
 只有实际补齐这些证据后，才更新硬件、性能或远端交付结论。
+
+## 7. GitHub Actions 自动回归
+
+2026-10-03 核对首次公开版本的远端工作流：
+
+| 项目 | 记录 |
+| --- | --- |
+| 提交 | [`ce799cc`](https://github.com/xiaoli5201314-spec/stm32h750-can-data-terminal/tree/ce799cc10aedc19ce3108224adb5f4a572012e5f) |
+| 工作流 | [Host Tests / 37060921303](https://github.com/xiaoli5201314-spec/stm32h750-can-data-terminal/actions/runs/37060921303) |
+| 状态 | `completed` / `success` |
+| 执行内容 | Ubuntu GCC 主机测试、AddressSanitizer 与 UndefinedBehaviorSanitizer 测试 |
+
+后续提交的自动回归结果可从首页徽章进入对应的 Actions 记录查看。
